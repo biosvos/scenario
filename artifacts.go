@@ -31,6 +31,10 @@ func (a *Artifacts) Add(key string, value any) error {
 		return errors.Errorf("key(%v) is empty", key)
 	}
 
+	if reflect.ValueOf(value).IsZero() {
+		return errors.Errorf("key(%v)'s value is empty", key)
+	}
+
 	if a.isExistArtifact(key) {
 		return errors.Errorf("key(%v) is already exists", key)
 	}
