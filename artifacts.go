@@ -31,8 +31,7 @@ func (a *Artifacts) Add(key string, value any) error {
 		return errors.Errorf("key(%v) is empty", key)
 	}
 
-	_, ok := a.artifacts[key]
-	if ok {
+	if a.isExistArtifact(key) {
 		return errors.Errorf("key(%v) is already exists", key)
 	}
 
@@ -60,10 +59,14 @@ func (a *Artifacts) Fill(item any) error {
 
 func (a *Artifacts) IsExists(keys ...string) bool {
 	for _, key := range keys {
-		_, ok := a.artifacts[key]
-		if !ok {
+		if !a.isExistArtifact(key) {
 			return false
 		}
 	}
 	return true
+}
+
+func (a *Artifacts) isExistArtifact(key string) bool {
+	_, ok := a.artifacts[key]
+	return ok
 }
