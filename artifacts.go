@@ -43,8 +43,12 @@ func (a *Artifacts) Add(key string, value any) error {
 		return errors.Errorf("key(%v) is already exists", key)
 	}
 
-	a.artifacts[key] = value
+	a.setArtifact(key, value)
 	return nil
+}
+
+func (a *Artifacts) setArtifact(key string, value any) {
+	a.artifacts[key] = value
 }
 
 func (a *Artifacts) Fill(item any) error {
