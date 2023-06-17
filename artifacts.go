@@ -22,7 +22,6 @@ func NewArtifacts(items ...map[string]any) (*Artifacts, error) {
 			}
 		}
 	}
-
 	return ret, nil
 }
 
@@ -63,7 +62,6 @@ func (a *Artifacts) Fill(item any) error {
 	}
 
 	fields := reflect.ValueOf(item).Elem()
-
 	for i := 0; i < fields.NumField(); i++ {
 		if isZeroValue(fields.Field(i)) {
 			return errors.Errorf("field(%v.%v) is zero", reflect.TypeOf(item).Elem().Name(), fields.Type().Field(i).Name)
