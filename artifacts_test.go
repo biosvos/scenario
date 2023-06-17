@@ -36,6 +36,11 @@ func TestArtifacts_Add(t *testing.T) {
 		err := artifacts.Add("a", 0)
 		require.Error(t, err)
 	})
+	t.Run("false is not zero value", func(t *testing.T) {
+		artifacts, _ := NewArtifacts()
+		err := artifacts.Add("a", false)
+		require.NoError(t, err)
+	})
 	t.Run("empty key", func(t *testing.T) {
 		artifacts, _ := NewArtifacts()
 		err := artifacts.Add("", 1)

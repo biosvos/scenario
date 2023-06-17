@@ -26,12 +26,16 @@ func NewArtifacts(items ...map[string]any) (*Artifacts, error) {
 	return ret, nil
 }
 
+func isZeroValue(value reflect.Value) bool {
+	return value.Kind() != reflect.Bool && value.IsZero()
+}
+
 func (a *Artifacts) Add(key string, value any) error {
 	if key == "" {
 		return errors.Errorf("key(%v) is empty", key)
 	}
 
-	if reflect.ValueOf(value).IsZero() {
+	if isZeroValue(reflect.ValueOf(value)) {
 		return errors.Errorf("key(%v)'s value is empty", key)
 	}
 
@@ -53,7 +57,7 @@ func (a *Artifacts) Fill(item any) error {
 	fields := reflect.ValueOf(item).Elem()
 
 	for i := 0; i < fields.NumField(); i++ {
-		if fields.Field(i).IsZero() {
+		if isZeroValue(fields.Field(i)) {
 			return errors.Errorf("field(%v.%v) is zero", reflect.TypeOf(item).Elem().Name(), fields.Type().Field(i).Name)
 		}
 	}
