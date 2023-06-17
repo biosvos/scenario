@@ -120,3 +120,17 @@ func TestArtifacts_IsExists(t *testing.T) {
 		require.False(t, ret)
 	})
 }
+
+func TestArtifacts_Merge(t *testing.T) {
+	a, _ := NewArtifacts(map[string]any{
+		"A": 1,
+	})
+	b, _ := NewArtifacts(map[string]any{
+		"B": 2,
+	})
+
+	err := a.Merge(b)
+
+	require.NoError(t, err)
+	require.Len(t, a.artifacts, 2)
+}

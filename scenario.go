@@ -57,11 +57,9 @@ func (s *Scenario) Run(writer io.Writer) error {
 			return errors.New("step is not done.")
 		}
 		printf(writer, "%v elapsed\n", time.Since(start))
-		for key, value := range outputs.artifacts {
-			err := s.artifacts.Add(key, value)
-			if err != nil {
-				return errors.WithStack(err)
-			}
+		err = s.artifacts.Merge(outputs)
+		if err != nil {
+			return errors.WithStack(err)
 		}
 	}
 	return nil

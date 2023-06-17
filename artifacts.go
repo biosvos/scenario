@@ -30,6 +30,14 @@ func isZeroValue(value reflect.Value) bool {
 }
 
 func (a *Artifacts) Add(key string, value any) error {
+	err := a.add(key, value)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	return nil
+}
+
+func (a *Artifacts) add(key string, value any) error {
 	if isEmptyString(key) {
 		return errors.Errorf("key(%v) is empty", key)
 	}
@@ -83,4 +91,14 @@ func (a *Artifacts) IsExists(keys ...string) bool {
 func (a *Artifacts) isExistArtifact(key string) bool {
 	_, ok := a.artifacts[key]
 	return ok
+}
+
+func (a *Artifacts) Merge(other *Artifacts) error {
+	for key, value := range other.artifacts {
+		err := a.add(key, value)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+	}
+	return nil
 }
