@@ -53,7 +53,7 @@ func (s *Scenario) Run(writer io.Writer) error {
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		if !outputs.IsExists(step.DefinitionOfDone()...) {
+		if IsStepDone(outputs, step.DefinitionOfDone()) {
 			return errors.New("step is not done.")
 		}
 		printf(writer, "%v elapsed\n", time.Since(start))
@@ -63,4 +63,8 @@ func (s *Scenario) Run(writer io.Writer) error {
 		}
 	}
 	return nil
+}
+
+func IsStepDone(outputs *Artifacts, steps []string) bool {
+	return !outputs.IsExists(steps...)
 }
