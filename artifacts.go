@@ -31,7 +31,7 @@ func isZeroValue(value reflect.Value) bool {
 }
 
 func (a *Artifacts) Add(key string, value any) error {
-	if key == "" {
+	if isEmptyString(key) {
 		return errors.Errorf("key(%v) is empty", key)
 	}
 
@@ -45,6 +45,10 @@ func (a *Artifacts) Add(key string, value any) error {
 
 	a.setArtifact(key, value)
 	return nil
+}
+
+func isEmptyString(key string) bool {
+	return key == ""
 }
 
 func (a *Artifacts) setArtifact(key string, value any) {
