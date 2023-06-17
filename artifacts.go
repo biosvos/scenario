@@ -18,7 +18,7 @@ func NewArtifacts(items ...map[string]any) (*Artifacts, error) {
 		for key, value := range item {
 			err := ret.Add(key, value)
 			if err != nil {
-				return nil, err
+				return nil, errors.WithStack(err)
 			}
 		}
 	}
