@@ -31,10 +31,14 @@ func NewScenario(steps []Step, opts ...Option) (*Scenario, error) {
 }
 
 func printf(writer io.Writer, format string, a ...any) {
-	if writer == nil {
+	if isEmptyWriter(writer) {
 		return
 	}
 	_, _ = io.WriteString(writer, fmt.Sprintf(format, a...))
+}
+
+func isEmptyWriter(writer io.Writer) bool {
+	return writer == nil
 }
 
 func (s *Scenario) Run(writer io.Writer) error {
