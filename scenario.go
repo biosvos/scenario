@@ -82,7 +82,7 @@ func printInput(writer io.Writer, input any) {
 }
 
 func printOutput(writer io.Writer, output *Artifacts) {
-	marshal, _ := json.MarshalIndent(output, "", "\t")
+	marshal, _ := json.MarshalIndent(output.artifacts, "", "\t")
 	printf(writer, "output: %v\n", string(marshal))
 }
 
