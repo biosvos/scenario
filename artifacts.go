@@ -63,6 +63,10 @@ func (a *Artifacts) setArtifact(key string, value any) {
 }
 
 func (a *Artifacts) Fill(item any) error {
+	if item == nil {
+		return nil
+	}
+
 	marshal, _ := json.Marshal(a.artifacts)
 	err := json.Unmarshal(marshal, item)
 	if err != nil {
